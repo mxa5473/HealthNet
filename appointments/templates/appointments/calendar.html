@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+{% include "navbar.html" %}
+
+{% block content %}
+    <head>
+        <meta charset="UTF-8">
+        <title>HealthNet</title>
+
+        {% load staticfiles %}
+        <link rel="stylesheet" type="text/css" href="{% static "css/fullcalendar.css" %}"/>
+        <link rel="stylesheet" media="'print" type="text/css" href="{% static "css/fullcalendar.print.min.css" %}"/>
+        <script type="text/javascript" src="{% static "js/lib/jquery-ui.min.js" %}"></script>
+        <script type="text/javascript" src="{% static "js/jquery.min.js" %}"></script>
+        <script type="text/javascript" src="{% static "js/moment.min.js" %}"></script>
+        <script type="text/javascript" src="{% static "js/fullcalendar.js" %}"></script>
+
+    </head>
+    <body style="background-color: whitesmoke">
+    <div class="container col-md-6 col-md-offset-3 " style="background-color: white; padding: 2%; border-radius: 10px;">
+
+        <script>
+            $(document).ready(function () {
+
+                // page is now ready, initialize the calendar...
+
+                $('#calendar').fullCalendar({
+                    // put your options and callbacks here
+
+                    header: {
+                        left: 'today, prev, next',
+                        center: 'title',
+                        right: 'month,basicWeek,listDay,listWeek',
+                    },
+
+                    views: {
+                        listDay: {buttonText: 'list day'},
+                        listWeek: {buttonText: 'list week'}
+                    },
+                    navLinks: true,
+                    eventStartEdible: true,
+                    selectHelper: true,
+                    eventLimit: true,
+                    minTime: "00:00",
+                    maxTime: "23:59",
+
+                    dayClick: function(date) {
+                        //alert('Clicked on: ' + date.format());
+                        currDate = date.format()
+                        currYear = currDate.substr(0, 4)
+                        currDay = currDate.substr(8,9)
+                        monthPlace = currDate.substr(5,7)
+                        currMonth = monthPlace.substr(0, 2)
+                        passedDate = currYear+currMonth+currDay
+                        urlIs = "/newapp/"+passedDate
+                        window.location.href = urlIs;
+                    },
+
+                    events: [
+                        {% for appointment in appts %}
+                            {
+                                title: '{{ appointment.patient.getFullName }}',
+                                start: '{{ appointment.datetimeToString }}',
+                                reason: '{{ appointment.short_reason }}',
+                                //redirect to edit appointment if an appointment is clicked
+                                url: "/edit_app/{{ appointment.id}}",
+                                duration: {days: 0, hours: 1, minutes: 0}
+                            },
+                        {% endfor %}
+                    ]
+                })
+            });
+
+            $(document).ready(function () {
+                $(".nav li").removeClass("active");
+                $('#cal').addClass('active');
+            });
+        </script>
+
+        <div id='calendar'></div>
+
+    </div>
+
+    </body>
+
+{% endblock %}
+
+</html>

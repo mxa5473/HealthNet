@@ -1,0 +1,92 @@
+{% extends "account/index.html" %}
+
+{% block content %}
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <!-- If IE use the latest rendering engine -->
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+        <!-- Set the page to the width of the device and set the zoon level -->
+        <meta name="viewport" content="width = device-width, initial-scale = 1">
+        <title>Healthnet</title>
+
+        <!--Load local stylesheets-->
+        {% load staticfiles %}
+        <link rel="stylesheet" type="text/css" href="{% static " css/bootstrap.css" %}"/>
+        <!--<link rel="stylesheet" type="text/css" href="{% static "css/bootstrap-theme.css" %}"/>-->
+
+
+    </head>
+
+    <body style="background-color: whitesmoke">
+    <div class="col-md-6 col-md-offset-3">
+        <h3 class="text-center" style="color: white; background-color: #772953; border-radius: 10px;
+            padding-top: 1%; padding-bottom: 1%">Create New Test</h3>
+
+        <div class="container-fluid">
+
+            <form method="POST" action='' enctype="multipart/form-data">
+                {% csrf_token %}
+
+                <table>
+                    <div> {{ form.patient.label }}</div>
+                    <div>{{ form.patient }}</div>
+                    <div> {{ form.name.label }}</div>
+                    <div>{{ form.name }}</div>
+                    <div> {{ form.comments.label }}</div>
+                    <div>{{ form.comments }}</div>
+
+                    <div>{{ form.file.label }}</div>
+                    <div>{{ form.file }}</div>
+
+                    <div> {{ form.released.label }}</div>
+                    <div>{{ form.released }}</div>
+
+                    {% for field in form %}
+
+                        {% if field.errors %}
+                            {% for error in field.errors %}
+                                <strong style="color: red">{{ error|escape }}</strong>
+                            {% endfor %}
+
+                            {% for error in field.non_field_errors %}
+                                <strong style="color: red">{{ error|escape }}</strong>
+                            {% endfor %}
+
+                        {% endif %}
+
+                    {% endfor %}
+                </table>
+
+                <input type="submit" style="margin-top:1%; float: left;" class="btn btn-success" value="{{ title }}"/>
+
+            </form>
+
+            <a href="/">
+                <button class="btn btn-default " style="margin-top: 1%; float: inherit; margin-left: 10%;">Cancel
+                </button>
+            </a>
+
+        </div>
+
+    </div>
+
+    </body>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $(".nav li").removeClass("active");
+            $('#tests').addClass('active');
+        });
+
+    </script>
+
+
+{% endblock %}
+</html>

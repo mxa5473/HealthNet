@@ -1,0 +1,159 @@
+{% extends "administration/index.html" %}
+
+{% block content %}
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>HealthNet Admin</title>
+    </head>
+    <body>
+
+    {% if  message != "" %}
+
+        <div class="alert alert-success text-center">
+            <strong>{{ message }}</strong>
+        </div>
+
+    {% endif %}
+
+    <h2>Hello Admin!</h2>
+
+    <p>To add doctors or nurses, select an option above</p>
+
+    <div class="col-md-3">
+
+        <h3 class="text-center"
+            style=" color: white; background-color: #772953; border-radius: 10px; padding-top: 1%; padding-bottom: 1%">
+            Doctors:</h3>
+
+
+        <table class="table table-hover">
+
+            <thead>
+
+            <tr>
+                <th>Name:</th>
+                <th>Specialty:</th>
+            </tr>
+
+            </thead>
+            <tbody>
+
+            {% for doctor in doctors %}
+                <tr>
+                    <td>{{ doctor }}</td>
+                    <td>{{ doctor.type }}</td>
+
+                </tr>
+
+            {% endfor %}
+
+
+            </tbody>
+        </table>
+
+    </div>
+
+    <div class="col-md-3">
+
+        <h3 class="text-center"
+            style=" color: white; background-color: #772953; border-radius: 10px; padding-top: 1%; padding-bottom: 1%">
+            Nurses:</h3>
+
+
+        <table class="table table-hover">
+
+            <thead>
+
+            <tr>
+                <th>Name:</th>
+                <th>Specialty:</th>
+            </tr>
+
+            </thead>
+            <tbody>
+
+            {% for nurse in nurses %}
+                <tr>
+                    <td>{{ nurse }}</td>
+                    <td>{{ nurse.type }}</td>
+
+                </tr>
+
+            {% endfor %}
+
+
+            </tbody>
+        </table>
+
+    </div>
+
+    <div class="col-md-3">
+
+        <h3 class="text-center"
+            style=" color: white; background-color: #772953; border-radius: 10px; padding-top: 1%; padding-bottom: 1%">
+            Recent Activities:</h3>
+
+        <div style="overflow-y: scroll; height: 60vh;">
+            <table class="table table-hover">
+
+                <thead>
+
+                <tr>
+                    <th>Action:</th>
+                </tr>
+
+                </thead>
+                <tbody>
+
+                {% for log in logs %}
+                    <tr>
+                        <td>{{ log.username }} {{ log.action }}</td>
+
+                    </tr>
+
+                {% endfor %}
+
+
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+    <div class="col-md-3">
+
+        <h3 class="text-center"
+            style=" color: white; background-color: #772953; border-radius: 10px; padding-top: 1%; padding-bottom: 1%">
+            System Statistics:</h3>
+
+        <div style="">
+            <table class="table table-hover">
+
+                <thead>
+
+                <tr>
+                    <th>Statistic:</th>
+                    <th>Value:</th>
+                </tr>
+
+                </thead>
+                <tbody>
+                {% for stat in statistics %}
+                    <tr>
+                        <td>{{ stat.name }}</td>
+                        <td>{{ stat.value }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+
+    </body>
+    </html>
+
+{% endblock %}

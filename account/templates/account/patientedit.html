@@ -1,0 +1,109 @@
+{% extends "account/index.html" %}
+
+{% block content %}
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <!-- If IE use the latest rendering engine -->
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+        <!-- Set the page to the width of the device and set the zoon level -->
+        <meta name="viewport" content="width = device-width, initial-scale = 1">
+        <title>HealthNet</title>
+        <!--Load local stylesheets-->
+        {% load staticfiles %}
+        <link rel="stylesheet" type="text/css" href="{% static "css/bootstrap.css" %}"/>
+        <!--<link rel="stylesheet" type="text/css" href="{% static "css/bootstrap-theme.css" %}"/>-->
+
+
+    </head>
+
+    <body style="background-color: whitesmoke">
+
+    {% if  message != "" %}
+
+        <div class="alert alert-success text-center">
+            <strong>{{ message }}</strong>
+        </div>
+
+    {% endif %}
+    <h1>{{ title }}</h1>
+
+    <div class="container-fluid col-md-8 col-md-offset-2">
+        <h3 class="text-center" style="color: white; background-color: #772953; border-radius: 10px;
+            padding-top: 1%; padding-bottom: 1%;">
+            {% if usertype == "Doctor" %}
+                Dr.
+            {% else %}
+                Nurse
+            {% endif %}
+
+            {{ user.last_name }}'s Patients</h3>
+        <table class="table table-responsive table-hover table-smoke-background">
+
+            <thead>
+
+            <tr>
+                <th>Name:</th>
+                <th class="hidden-xs hidden-sm">Primary Doctor:</th>
+
+                <th class="hidden-xs hidden-sm">Currently Admitted (y/n):</th>
+
+
+                {% if usertype == "Doctor" %}
+                    <th>Toggle Admittance:</th>
+                {% endif %}
+
+                <th>Options:</th>
+            </tr>
+
+            </thead>
+            <tbody>
+
+            {% for patient in patients %}
+                <tr>
+                    <td>{{ patient.profile.user.first_name }} {{ patient.profile.user.last_name }}</td>
+                    <td class="hidden-xs hidden-sm">Dr. {{ patient.doctor.profile.user.last_name }}</td>
+
+                    <td class="hidden-xs hidden-sm">{{ patient.isAdmitted }}</td>
+
+                    {% if usertype == "Doctor" %}
+                        <td><a style="margin-top: 1%; float: inherit; margin-left: 10%;"
+                               href="/toggle_admittance/{{ patient.id }}">Toggle</a></td>
+                    {% endif %}
+
+
+                    <td><a style="margin-top: 1%; float: inherit; margin-left: 10%;" href="/edit_pat/{{ patient.id }}">Manage</a>
+                    </td>
+
+                </tr>
+
+            {% endfor %}
+
+
+            </tbody>
+        </table>
+
+    </div>
+
+    </body>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $(".nav li").removeClass("active");
+            $('#patientedit').addClass('active');
+        });
+
+
+    </script>
+
+
+
+
+{% endblock %}
+</html>

@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+{% extends "base.html" %}
+
+{% block page %}
+
+    <head>
+        <meta charset="UTF-8">
+        {% load staticfiles %}
+        <link rel="stylesheet" type="text/css" href="{% static "css/account.css" %}"/>
+        <title>HealthNet</title>
+    </head>
+
+    <body class="body">
+
+    <h2>Welcome to HealthNet</h2>
+
+    <div class="infopan">
+
+        <h3>Your Information</h3>
+        <table class="userinfo">
+            <tr>
+                <th>username:</th>
+                <th>
+                    <div class="infofield">{{ user.username }}</div>
+                </th>
+            </tr>
+            <tr>
+                <th>first name:</th>
+                <th>
+                    <div class="infofield"> {{ user.first_name }}</div>
+                </th>
+            </tr>
+            <tr>
+
+                <th>last name:</th>
+                <th>
+                    <div class="infofield">{{ user.last_name }}</div>
+                </th>
+            </tr>
+
+            <tr>
+                <th>email:</th>
+                <th>
+                    <div class="infofield">{{ user.email }}</div>
+                </th>
+            </tr>
+
+            <tr>
+                <th>Address:</th>
+                <th>
+
+                    <div class="infofield">{{ profile.streetAddress }}</div>
+                </th>
+
+            </tr>
+
+            <tr>
+                <th>Town:</th>
+                <th>
+
+                    <div class="infofield">{{ profile.town }}</div>
+                </th>
+
+            </tr>
+            <tr>
+                <th>Zip Code:</th>
+                <th>
+
+                    <div class="infofield">{{ profile.zipCode }}</div>
+                </th>
+
+            </tr>
+            <tr>
+                <th>State:</th>
+                <th>
+
+                    <div class="infofield">{{ profile.state }}</div>
+                </th>
+
+            </tr>
+
+            <tr>
+                <th>Phone Number:</th>
+                <th>
+
+                    <div class="infofield">{{ profile.phoneNumber }}</div>
+                </th>
+
+            </tr>
+
+        </table>
+
+    </div>
+
+    <div class="editinfo">
+        {% block edituser %}
+            <h2>Edit Your Information</h2>
+            <div class="editbox">
+            <form method="POST" class="post-form">{% csrf_token %}
+
+                <table>
+                    <tr>
+                        <th>Username:</th>
+                        <th>{{ userform.username }}</th>
+                    </tr>
+
+                    <tr>
+                        <th>First Name:</th>
+                        <th>{{ userform.first_name }}</th>
+                    </tr>
+                    <tr>
+                        <th>Last Name:</th>
+                        <th>{{ userform.last_name }}</th>
+                    </tr>
+                    <tr>
+                        <th>Email:</th>
+                        <th>{{ userform.email }}</th>
+
+                    </tr>
+
+                    <tr>
+                        <th>Street Address:</th>
+                        <th>{{ profileform.streetAddress }}</th>
+                    </tr>
+
+                    <tr>
+                        <th>Town:</th>
+                        <th>{{ profileform.town }}</th>
+                    </tr>
+                    <tr>
+                        <th>Zip Code:</th>
+                        <th>{{ profileform.zipCode }}</th>
+
+                    </tr>
+                    <tr>
+                        <th>State:</th>
+                        <th>{{ profileform.state }}</th>
+
+                    </tr>
+
+                    <tr>
+                        <th>Phone Number:</th>
+                        <th>{{ profileform.phoneNumber }}</th>
+
+                    </tr>
+
+
+                </table>
+
+                <button type="submit" class="save btn btn-default">save</button>
+            </form>
+        {% endblock %}
+
+
+
+        </div>
+    </div>
+
+
+    </body>
+    </html>
+
+{% endblock %}

@@ -1,0 +1,96 @@
+{% extends "administration/index.html" %}
+
+{% block content %}
+
+    <div class="col-md-4 col-md-offset-4">
+
+        <h3 class="text-center"
+            style=" color: white; background-color: #772953; border-radius: 10px; padding-top: 1%; padding-bottom: 1%"
+        >
+            {{ title }}</h3>
+
+        <div class="container">
+
+            <form method="POST" action='' enctype="multipart/form-data">
+                {% csrf_token %}
+
+                <table>
+                    {% for field in form %}
+                        <div> {{ field.label }}</div>
+                        <div>{{ field }}</div>
+
+                        {% if field.errors %}
+                            {% for error in field.errors %}
+                                <strong>{{ error|escape }}</strong>
+                            {% endfor %}
+
+                            {% for error in field.non_field_errors %}
+                                <strong>{{ error|escape }}</strong>
+                            {% endfor %}
+
+                        {% endif %}
+
+                    {% endfor %}
+
+                    <div> {{ prof.hospital_assignment.label }}</div>
+                    <div>{{ prof.hospital_assignment }}</div>
+
+                    {% if prof.hospital_assignment.errors %}
+                        {% for error in prof.hospital_assignment.errors %}
+                            <strong>{{ error|escape }}</strong>
+                        {% endfor %}
+
+                        {% for error in prof.hospital_assignment.non_field_errors %}
+                            <strong>{{ error|escape }}</strong>
+                        {% endfor %}
+
+                    {% endif %}
+
+
+                </table>
+
+                <input type="submit" class="btn btn-default" value="{{ title }}"/>
+
+            </form>
+
+        </div>
+
+
+    </div>
+
+    {% if title == "Register Nurse" %}
+
+        <script>
+            $(document).ready(function () {
+                $(".nav li").removeClass("active");
+                $('#newnurse').addClass('active');
+            });
+
+        </script>
+
+    {% elif title == "Register Hospital" %}
+
+        <script>
+            $(document).ready(function () {
+                $(".nav li").removeClass("active");
+                $('#newhospital').addClass('active');
+            });
+        </script>
+
+    {% elif title == "Register Doctor" %}
+
+
+
+        <script>
+            $(document).ready(function () {
+                $(".nav li").removeClass("active");
+                $('#newdoc').addClass('active');
+            });
+
+        </script>
+
+    {% endif %}
+
+
+
+{% endblock content %}
